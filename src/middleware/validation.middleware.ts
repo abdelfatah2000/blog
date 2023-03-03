@@ -3,12 +3,9 @@ import { validate, ValidationError } from 'class-validator';
 import * as express from 'express';
 import HttpException from '../exceptions/HttpException';
 
-function validator<T>(type: any): express.RequestHandler {
+function validationMiddleware<T>(type: any): express.RequestHandler {
   return (req, res, next) => {
-    validate(plainToInstance(type, req.body), {
-      skipMissingProperties: true,
-    }).then((errors: ValidationError[]) => {
-      console.log(errors);
+    validate(plainToInstance(type, req.body)).then((errors: ValidationError[]) => {
       if (errors.length > 0) {
         const message = errors
           .map((error: ValidationError) => Object.values(error.constraints!))
@@ -21,4 +18,4 @@ function validator<T>(type: any): express.RequestHandler {
   };
 }
 
-export default validator;
+export default validationMiddleware;

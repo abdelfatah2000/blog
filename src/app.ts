@@ -1,21 +1,29 @@
 import express, { Request, Response, Application } from 'express';
 import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/error.middleware';
+import mongoSanitize from 'express-mongo-sanitize';
+import jwtStrategy from './auth/passport';
+import passport from 'passport';
+
 
 class App {
   public app: Application;
 
   constructor(controllers: any) {
     this.app = express();
-
+    this.connectDatabase();
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
-    this.connectDatabase();
     this.initializeErrorMiddleware();
   }
   private initializeMiddlewares() {
     this.app.use(bodyParser.json());
+    this.app.use(mongoSanitize());
+    this.app.use(cookieParser());
+    this.app.use(passport.initialize());
+    passport.use(jwtStrategy);
   }
 
   private initializeControllers(controllers: any) {
@@ -26,7 +34,9 @@ class App {
 
   public listen() {
     this.app.listen(process.env.PORT, () => {
-      console.log(`App listening on the port ${process.env.PORT}`);
+      console.log(
+        `Example app listening at http://localhost:${process.env.PORT}`
+      );
     });
   }
 

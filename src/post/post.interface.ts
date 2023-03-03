@@ -1,9 +1,8 @@
-interface Post {
+import { Document } from 'mongoose';
+interface IPost extends Document {
   authorId: string;
   content: string;
   title: string;
-  createdAt: String;
-  updatedAt: String;
 }
 
-export default Post;
+export default IPost;

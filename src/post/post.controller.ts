@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction, Router } from 'express';
-import PostNotFoundHandler from '../middleware/PostNotFound.middleware';
+import PostNotFoundHandler from '../exceptions/PostNotFoundException';
 import Controller from '../interfaces/controller.interface';
 import Post from './post.interface';
 import PostModel from './post.model';
 import CreatePostDto from './post.dto';
 import validator from '../middleware/validation.middleware';
+import passport from 'passport';
 
 class PostController implements Controller {
   public path = '/posts';
@@ -16,15 +17,33 @@ class PostController implements Controller {
   }
 
   private initializeRouters() {
-    this.router.get(`${this.path}`, this.getAllPosts);
-    this.router.get(`${this.path}/:id`, this.getPostById);
-    this.router.post(`${this.path}`, validator(CreatePostDto), this.createPost);
+    this.router.get(
+      `${this.path}`,
+      passport.authenticate('jwt', { session: false }),
+      this.getAllPosts
+    );
+    this.router.get(
+      `${this.path}/:id`,
+      passport.authenticate('jwt', { session: false }),
+      this.getPostById
+    );
+    this.router.post(
+      `${this.path}`,
+      passport.authenticate('jwt', { session: false }),
+      validator(CreatePostDto),
+      this.createPost
+    );
     this.router.put(
       `${this.path}/:id`,
+      passport.authenticate('jwt', { session: false }),
       validator(CreatePostDto),
       this.editPost
     );
-    this.router.delete(`${this.path}/:id`, this.deletePost);
+    this.router.delete(
+      `${this.path}/:id`,
+      passport.authenticate('jwt', { session: false }),
+      this.deletePost
+    );
   }
 
   private getAllPosts = (req: Request, res: Response) => {

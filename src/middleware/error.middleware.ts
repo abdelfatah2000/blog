@@ -8,8 +8,8 @@ function errorHandler(
   next: NextFunction
 ) {
   const status = err.status || 500;
-  const msg = err.message || 'Error, Please try again';
-  res.status(status).send({ msg, status });
+  const message = err.message || 'Error, Please try again';
+  res.status(status).send({ message, status });
 }
 
 export default errorHandler;

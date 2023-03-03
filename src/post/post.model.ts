@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import Post from './post.interface';
+import IPost from './post.interface';
 
 const postSchema = new mongoose.Schema(
   {
@@ -12,6 +12,9 @@ const postSchema = new mongoose.Schema(
   }
 );
 
-const PostModel = mongoose.model<Post & mongoose.Document>('Post', postSchema);
+const PostModel: mongoose.Model<IPost> = mongoose.model<IPost>(
+  'Post',
+  postSchema
+);
 
 export default PostModel;
