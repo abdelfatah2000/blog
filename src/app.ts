@@ -4,7 +4,7 @@ import * as mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/error.middleware';
 import mongoSanitize from 'express-mongo-sanitize';
-import jwtStrategy from './auth/passport';
+import jwtStrategy from './middleware/passport';
 import passport from 'passport';
 
 

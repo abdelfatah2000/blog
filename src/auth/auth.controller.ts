@@ -12,7 +12,6 @@ import { sign, SignOptions, verify, VerifyOptions } from 'jsonwebtoken';
 import WrongCredentialsException from '../exceptions/WrongCredentialsException';
 import validator from '../middleware/validation.middleware';
 
-
 class AuthController implements Controller {
   public path = '/auth';
   public router = express.Router();
@@ -81,7 +80,6 @@ class AuthController implements Controller {
       expiresIn: '1d',
     };
     return sign(payload, privateKey, signInOptions);
-
   };
 }
 
