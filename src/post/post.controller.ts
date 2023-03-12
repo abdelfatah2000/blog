@@ -60,7 +60,7 @@ class PostController implements Controller {
     const id = req.params.id;
     this.post.findById(id).then((post) => {
       if (post) {
-        res.send(post);
+        res.json({ post });
       } else {
         next(new PostNotFoundHandler(id));
       }
@@ -71,7 +71,7 @@ class PostController implements Controller {
     const payload: Post = req.body;
     const createdPost = new this.post(payload);
     createdPost.save().then((post) => {
-      res.send(post);
+      res.json({ post });
     });
   };
 
@@ -79,7 +79,7 @@ class PostController implements Controller {
     const id = req.params.id;
     const payload: Post = req.body;
     this.post.findByIdAndUpdate(id, payload, { new: true }).then((post) => {
-      res.send(post);
+      res.json({ post });
     });
   };
 

@@ -9,7 +9,7 @@ function errorHandler(
 ) {
   const status = err.status || 500;
   const message = err.message || 'Error, Please try again';
-  res.status(status).send({ message, status });
+  res.status(status).json({ message, status });
 }
 
 export default errorHandler;

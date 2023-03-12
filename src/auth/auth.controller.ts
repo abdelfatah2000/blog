@@ -69,6 +69,7 @@ class AuthController implements Controller {
 
   private generateToken = (email: string, id: string) => {
     const privateKey = fs.readFileSync(
+      // deepcode ignore ArrayMethodOnNonArray: <please specify a reason of ignoring this>, deepcode ignore ArrayMethodOnNonArray: <please specify a reason of ignoring this>
       path.join(__dirname, './../../private.key')
     );
     const payload = {
