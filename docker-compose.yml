@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      target: development
+    ports:
+      - 3000:3000
+    environment:
+      - CONNECTION_STRING=mongodb://db/blog
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27018:27017
+    volumes:
+      - blog-data:/data/db
+
+volumes:
+  blog-data:
